@@ -1,0 +1,37 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "name",
+			"order": 0
+		},
+		"path": {
+			"name": "path",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "path",
+			"order": 1
+		},
+		"abstractionIds": {
+			"name": "abstractionIds",
+			"type": "array",
+			"typeLabel": "array",
+			"required": true,
+			"id": "abstractionIds",
+			"order": 2
+		},
+		"definition": {
+			"name": "definition",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "definition",
+			"order": 3
+		}
+	}
+}

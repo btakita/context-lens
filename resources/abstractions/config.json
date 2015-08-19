@@ -1,0 +1,53 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "name",
+			"order": 0
+		},
+		"path": {
+			"name": "path",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "path",
+			"order": 1
+		},
+		"contextId": {
+			"name": "contextId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "contextId",
+			"order": 2
+		},
+		"authorUserId": {
+			"name": "authorUserId",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "authorUserId",
+			"order": 3
+		},
+		"ancestorIds": {
+			"name": "ancestorIds",
+			"type": "array",
+			"typeLabel": "array",
+			"required": false,
+			"id": "ancestorIds",
+			"order": 4
+		},
+		"definition": {
+			"name": "definition",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "definition",
+			"order": 5
+		}
+	}
+}

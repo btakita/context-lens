@@ -1,0 +1,21 @@
+{
+	"type": "Collection",
+	"properties": {
+		"entityIds": {
+			"name": "entityIds",
+			"type": "array",
+			"typeLabel": "array",
+			"required": true,
+			"id": "entityIds",
+			"order": 0
+		},
+		"path": {
+			"name": "path",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "path",
+			"order": 1
+		}
+	}
+}

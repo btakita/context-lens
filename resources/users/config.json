@@ -1,0 +1,13 @@
+{
+	"type": "UserCollection",
+	"properties": {
+		"path": {
+			"name": "path",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "path",
+			"order": 0
+		}
+	}
+}
