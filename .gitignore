@@ -1,2 +1,6 @@
 .dpd
 data
+junk.*
+node_modules
+public/dist/*.js
+public/dist/*.map

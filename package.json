@@ -1,0 +1,65 @@
+{
+  "name": "context-lens",
+  "version": "0.1.0",
+  "description": "Wikis having an explicit Contextual Lens",
+  "homepage": "https://github.com/btakita/context-lens",
+  "repository": "btakita/context-lens",
+  "author": "Brian Takita",
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "context lens",
+    "philosophy",
+    "perspectives",
+    "schema",
+    "wiki",
+    "dictionary"
+  ],
+  "dependencies": {
+    "plural": "^0.1.6",
+    "riot": "^2.2.4",
+    "riotcontrol": "^0.0.1",
+    "sort-on": "^1.2.2"
+  },
+  "devDependencies": {
+    "babelify": "^6.1.3",
+    "brfs": "^1.4.1",
+    "browserify": "^11.0.1",
+    "gulp": "^3.9.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-util": "^3.0.6",
+    "jsdom": "^6.0.1",
+    "lodash.assign": "^3.2.0",
+    "riotify": "^0.1.2",
+    "tape": "^4.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.3.1"
+  },
+  "preferGlobal": true,
+  "files": [
+    "lib",
+    "riot.js",
+    "riot.min.js",
+    "compiler.js",
+    "compiler.min.js",
+    "riot+compiler.js",
+    "riot+compiler.min.js"
+  ],
+  "bin": {
+    "riot": "lib/server/cli.js"
+  },
+  "main": "lib/server/index.js",
+  "browser": "riot.js",
+  "spm": {
+    "main": "riot.js",
+    "ignore": [
+      "demo",
+      "doc",
+      "test",
+      "lib",
+      "make"
+    ]
+  }
+}
