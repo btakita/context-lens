@@ -2,5 +2,6 @@
 data
 junk.*
 node_modules
-public/dist/*.js
+public/dist/dpd.js
+public/dist/index.js
 public/dist/*.map
