@@ -74,6 +74,10 @@ function setup(t, params) {
         return req.method == method.toUpperCase() && (req.url == url || uri.path == url) && fn2(req);
       });
     };
+    self.respond = function(request, status, headers, body) {
+      request.respond(status, headers, body);
+      self.clock.tick(2);
+    };
   }
   function setupDpd() {
     self.dpd = dpd
