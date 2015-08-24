@@ -4,7 +4,7 @@
     <div class="entity-stats">{ entityLabel(entities.length) }</div>
     <li each="{ entities }" onclick="{ parent.selected }" class="{ 'is-selected': isSelected }">
     <div class="list-item-wrapper">
-      <span>{ name }</span>
+      <span class="entity-name">{ name }</span>
       <span class="list-item-secondary-text">{ parent.perspectiveLabel(perspectives.length) }</span>
     </div>
     </li>
@@ -19,7 +19,8 @@
     this.entities = [];
 
     var self = this;
-    riotControl.on('moviesChanged', function (entities) {
+    riotControl.on('entitiesChanged', function (entities) {
+      console.log("entity-list.tag|on entitiesChanged");
       self.entities = sort(entities, 'name');
       self.update();
     });
@@ -33,6 +34,6 @@
       riotControl.trigger('filterPerspectives', e.item.perspectives);
       riotControl.trigger('entitySelected', e.item);
     }.bind(this);
-    riotControl.trigger("load_store", EntityStore);
+    riotControl.trigger("loadStore", EntityStore);
   </script>
 </entity-list>

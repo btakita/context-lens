@@ -13,7 +13,8 @@ function EntityStore() {
     });
   }
   function loadStoreGetEntities(entities, err) {
-    console.log("entity_store/loadStoreGetEntities");
+    console.log("entity_store/loadStoreGetEntities", entities);
+    RiotControl.trigger("entitiesChanged", entities);
   }
   main();
 }

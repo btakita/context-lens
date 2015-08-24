@@ -1,10 +1,11 @@
 var sinon = require("sinon")
-  , test = require('tape')
+  , test = require('tape-catch')
   , _ = require("lodash")
   , riot = require("riot")
   , bundle = require("../public/index.bundle")
   , ayepromise = window.ayepromise = require("ayepromise")// TODO: Remove when https://github.com/deployd/deployd/issues/644 is resolved
-  , dpd = require("../public/dist/dpd");
+  , dpd = require("../public/dist/dpd")
+  , URI = require("uri-js");
 document.querySelector('body').innerHTML += '<context-lens-wrapper></context-lens-wrapper>';
 var support = {
   setup: setup,
@@ -34,7 +35,7 @@ function setup(t, params) {
   function main() {
     setupHelpers();
     setupDOM();
-    //setupExceptionHandling();
+    setupExceptionHandling();
     logTestName();
     setupSinon();
     setupDpd();
@@ -66,6 +67,13 @@ function setup(t, params) {
     xhr.onCreate = function (xhr) {
       requests.push(xhr);
     };
+    self.request = function(method, url, fn) {
+      var fn2 = fn || function() {return true};
+      return _.find(requests, function(req) {
+        var uri = URI.parse(req.url);
+        return req.method == method.toUpperCase() && (req.url == url || uri.path == url) && fn2(req);
+      });
+    };
   }
   function setupDpd() {
     self.dpd = dpd
@@ -73,6 +81,7 @@ function setup(t, params) {
   function setupHelpers() {
     self.$ = _.bind(document.querySelector, document);
     self.$$ = _.bind(document.querySelectorAll, document);
+    self._ = _;
     self.mount = mount;
   }
   function mount(selector, tagName, opts) {
