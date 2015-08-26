@@ -3,8 +3,7 @@ var Store = require("./store")
 function EntityStore() {
   if (!(this instanceof EntityStore)) return new EntityStore();
   console.log("entity_store");
-  var self = this
-    , entities = [];
+  var self = this;
   function main() {
     console.log("entity_store|main");
     Store.call(self, {
@@ -12,15 +11,11 @@ function EntityStore() {
         dpd.entities.get(loadStoreGetEntities);
       }
     });
-    self.all = all;
   }
-  function loadStoreGetEntities(entities2, err) {
-    console.log("entity_store/loadStoreGetEntities", JSON.stringify(entities2));
-    entities = entities2;
+  function loadStoreGetEntities(entities, err) {
+    console.log("entity_store/loadStoreGetEntities", JSON.stringify(entities));
+    self.all(entities);
     RiotControl.trigger("entitiesChanged", entities);
-  }
-  function all() {
-    return entities.slice(0);
   }
   main();
 }

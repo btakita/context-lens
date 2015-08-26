@@ -2,7 +2,15 @@ function Store(params) {
   console.log("store", params);
   riot.observable(this);
   var params2 = params || {}
-    , self = this;
+    , self = this
+    , all2 = [];
+  self.all = all;
+  function all(value) {
+    if (value) {
+      all2 = value;
+    }
+    return all2;
+  }
   self.on("loadStore", function() {
     var isInstance = !arguments.length || !!(Array.prototype.some.call(arguments, function(arg) {
       return self instanceof arg;

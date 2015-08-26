@@ -6,7 +6,7 @@ var sinon = require("sinon")
   , ayepromise = window.ayepromise = require("ayepromise")// TODO: Remove when https://github.com/deployd/deployd/issues/644 is resolved
   , dpd = require("../public/dist/dpd")
   , URI = require("uri-js");
-document.querySelector('body').innerHTML += '<context-lens-wrapper></context-lens-wrapper>';
+document.querySelector('body').innerHTML += '<riot-wrapper></riot-wrapper>';
 var support = {
   setup: setup,
   test: function() {
@@ -44,7 +44,7 @@ function setup(t, params) {
   }
   function setupDOM() {
     var html = params.html || "";
-    self.$("context-lens-wrapper").innerHTML = html;
+    self.$("riot-wrapper").innerHTML = html;
   }
   function setupExceptionHandling() {
     process.on('uncaughtException', function(err) {
