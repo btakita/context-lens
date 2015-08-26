@@ -1,7 +1,6 @@
 <entity-list>
   Entity List
   <ul class="entity-list">
-    <div class="entity-stats">{ entityLabel(entities.length) }</div>
     <input type="text" class="entity-list-search">
     <li each="{ entities }" onclick="{ parent.selected }" class="{ 'is-selected': isSelected }">
     <div class="list-item-wrapper">
@@ -13,25 +12,26 @@
 
   <script>
     var auto = require("autocomplete-element")
-      , input = document.querySelector(".entity-list-search")
       , sort = require('sort-on')
       , plural = require('plural')
       , riotControl = require('riotcontrol')
-      , EntityStore = require("./entity_store")
-      , PerspectiveStore = require("./perspective_store")
-      , utils = require("./utils")
+      , EntityStore = require("./entities/entity_store")
+      , PerspectiveStore = require("./perspectives/perspective_store")
+      , extend = require("./object/extend")
       , entities2 = []
       , self = this
+      , input
       ;
+    var months = [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ];
     function main() {
       console.log("entity-list.tag|main");
       self.entities = [];
       self.perspectives = [];
 
       registerEvents();
-      self.entityLabel = function (count) {
-        return count + ' ' + plural('entity', count);
-      };
       self.perspectiveLabel = function (count) {
         return count + ' ' + plural('perspective', count);
       };
@@ -42,6 +42,10 @@
       riotControl.trigger("loadStore", EntityStore, PerspectiveStore);
     }
     function registerEvents() {
+      self.on('mount', function() {
+        input = document.querySelector(".entity-list-search");
+        registerAutocomplete();
+      });
       riotControl.on('entitiesChanged', function (entities3) {
         console.log("entity-list.tag|on entitiesChanged");
         entities2 = sort(entities3, 'name');
@@ -61,10 +65,21 @@
             return entity.id == entityId;
           });
         });
-        return utils.extend({}, entity, {perspectives: perspectives});
+        return extend({}, entity, {perspectives: perspectives});
       });
       self.update();
     }
+    function registerAutocomplete() {
+      console.info("input", input);
+      auto(input, function (c) {
+        if (!input.value.length) return c.suggest([]);
+        var matches = months.filter(function (m) {
+          return lc(m.slice(0, input.value.length)) === lc(input.value);
+        });
+        c.suggest(matches);
+      });
+    }
+    function lc (x) { return x.toLowerCase() }
     main();
   </script>
 </entity-list>

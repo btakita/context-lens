@@ -1,8 +1,11 @@
 console.log("public/index.bundle");
-require("./bind-polyfill");
+require("./function/polyfills");
+require("./vendor/shoestring");
+window.$ = window.shoestring;
 var riot;
 global.riot = riot = require("riot");
 require("riotcontrol");
+require("./array/polyfills");
 require("./entity-list.tag");
-require("./entity_store");
+require("./entities/entity_store");
 riot.mount('*');

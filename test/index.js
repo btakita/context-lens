@@ -44,7 +44,7 @@ function setup(t, params) {
   }
   function setupDOM() {
     var html = params.html || "";
-    self.$("riot-wrapper").innerHTML = html;
+    $("riot-wrapper").html(html);
   }
   function setupExceptionHandling() {
     process.on('uncaughtException', function(err) {
@@ -83,8 +83,6 @@ function setup(t, params) {
     self.dpd = dpd
   }
   function setupHelpers() {
-    self.$ = _.bind(document.querySelector, document);
-    self.$$ = _.bind(document.querySelectorAll, document);
     self._ = _;
     self.mount = mount;
   }

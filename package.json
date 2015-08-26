@@ -22,8 +22,10 @@
     "plural": "^0.1.6",
     "riot": "^2.2.4",
     "riotcontrol": "^0.0.1",
+    "shoestring": "^1.0.2",
     "socket.io": "^1.3.6",
-    "sort-on": "^1.2.2"
+    "sort-on": "^1.2.2",
+    "supertest": "^1.0.1"
   },
   "devDependencies": {
     "ayepromise": "^1.1.2",

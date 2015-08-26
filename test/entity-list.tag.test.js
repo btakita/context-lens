@@ -5,17 +5,16 @@ test('entity-list|render|GET /entities|200|render entity names|Get /perspectives
   {html: '<entity-list></entity-list>'},
   function(t) {
     t.mount();
-    t.equals(t.$$("entity-list").length, 1);
+    t.equals($("entity-list").length, 1, "entity-list");
     t.equals(t.requests.length, 2);
 
     getEntitiesReq(t);
-    t.equals(t.$("entity-list .entity-stats").textContent, "2 entities");
-    t.deepEquals(_.map(t.$$("entity-list li .entity-name"), function(span) {
+    t.deepEquals(_.map($("entity-list li .entity-name"), function(span) {
       return span.textContent;
     }), ["Joe Smith", "Lupita Juarez"]);
 
     getPerspectivesReq(t);
-    t.deepEquals(_.map(t.$$("entity-list li .perspective-length"), function(span) {
+    t.deepEquals(_.map($("entity-list li .perspective-length"), function(span) {
       return span.textContent;
     }), ["1 perspective", "1 perspective"]);
 

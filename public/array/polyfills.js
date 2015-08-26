@@ -1,18 +1,3 @@
-var utils = {
-  extend: function(obj) {
-    var extenders = Array.prototype.slice.call(arguments, 1)
-      , extendersLength = extenders.length;
-    for (var extendersI = 0; extendersI < extendersLength; extendersI++) {
-      var extender = extenders[extendersI];
-      for (var i in extender) {
-        if (extender.hasOwnProperty(i)) {
-          obj[i] = extender[i];
-        }
-      }
-    }
-    return obj;
-  }
-};
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.io/#x15.4.4.18
 if (!Array.prototype.forEach) {
@@ -154,4 +139,3 @@ if (!Array.prototype.some) {
     return false;
   };
 }
-module.exports = utils;
