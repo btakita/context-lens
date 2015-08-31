@@ -1,7 +1,9 @@
 <entity-list>
   Entity List
   <ul class="entity-list">
-    <input type="text" class="entity-list-search">
+    <div class="entity-list-search-wrapper">
+      <input type="text" class="entity-list-search">
+    </div>
     <li each="{ entities }" onclick="{ parent.selected }" class="{ 'is-selected': isSelected }">
     <div class="list-item-wrapper">
       <span class="entity-name">{ name }</span>
@@ -11,13 +13,14 @@
   </ul>
 
   <script>
-    var auto = require("autocomplete-element")
+    var AutoComplete = require("../vendor/auto-complete")
       , sort = require('sort-on')
       , plural = require('plural')
       , riotControl = require('riotcontrol')
-      , EntityStore = require("./entities/entity_store")
-      , PerspectiveStore = require("./perspectives/perspective_store")
-      , extend = require("./object/extend")
+      , EntityStore = require("./entity_store")
+      , dpdEntities = require("./dpd.entities.js")
+      , PerspectiveStore = require("../perspectives/perspective_store")
+      , extend = require("../object/extend")
       , entities2 = []
       , self = this
       , input
@@ -39,7 +42,7 @@
         riotControl.trigger('filterPerspectives', e.item.perspectives);
         riotControl.trigger('entitySelected', e.item);
       }.bind(self);
-      riotControl.trigger("loadStore", EntityStore, PerspectiveStore);
+//      riotControl.trigger("loadStore", EntityStore, PerspectiveStore);
     }
     function registerEvents() {
       self.on('mount', function() {
@@ -70,13 +73,20 @@
       self.update();
     }
     function registerAutocomplete() {
-      console.info("input", input);
-      auto(input, function (c) {
-        if (!input.value.length) return c.suggest([]);
-        var matches = months.filter(function (m) {
-          return lc(m.slice(0, input.value.length)) === lc(input.value);
-        });
-        c.suggest(matches);
+      console.info("registerAutocomplete");
+      new AutoComplete({
+        selector: input,
+        minChars: 2,
+        source: function(term, suggest) {
+          dpdEntities().get({
+            name: {$text: term}
+          }, function(entities3) {
+            entities2 = entities3;
+            suggest(entities2.map(function(entity) {
+              return entity.name;
+            }));
+          });
+        }
       });
     }
     function lc (x) { return x.toLowerCase() }

@@ -5,7 +5,8 @@ var sinon = require("sinon")
   , bundle = require("../public/index.bundle")
   , ayepromise = window.ayepromise = require("ayepromise")// TODO: Remove when https://github.com/deployd/deployd/issues/644 is resolved
   , dpd = require("../public/dist/dpd")
-  , URI = require("uri-js");
+  , URI = require("uri-js")
+  , deepEquals = require("deep-equal");
 document.querySelector('body').innerHTML += '<riot-wrapper></riot-wrapper>';
 var support = {
   setup: setup,
@@ -27,6 +28,7 @@ function setup(t, params) {
   var end2 = t.end
     , self = {
       bundle: bundle,
+      deepEquals2: deepEquals,
       end: end
     }
     , clock
@@ -71,7 +73,8 @@ function setup(t, params) {
       var fn2 = fn || function() {return true};
       return _.find(requests, function(req) {
         var uri = URI.parse(req.url);
-        return req.method == method.toUpperCase() && (req.url == url || uri.path == url) && fn2(req);
+        uri.queryHash = JSON.parse(decodeURIComponent(uri.query));
+        return req.method == method.toUpperCase() && (req.url == url || uri.path == url) && fn2(req, uri);
       });
     };
     self.respond = function(request, status, headers, body) {
@@ -80,7 +83,7 @@ function setup(t, params) {
     };
   }
   function setupDpd() {
-    self.dpd = dpd
+    self.dpd = window.dpd;
   }
   function setupHelpers() {
     self._ = _;

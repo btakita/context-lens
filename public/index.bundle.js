@@ -6,6 +6,6 @@ var riot;
 global.riot = riot = require("riot");
 require("riotcontrol");
 require("./array/polyfills");
-require("./entity-list.tag");
+require("./entities/entity-list.tag");
 require("./entities/entity_store");
 riot.mount('*');

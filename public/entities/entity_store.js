@@ -1,5 +1,6 @@
 var Store = require("../store")
-  , RiotControl = require("riotcontrol");
+  , RiotControl = require("riotcontrol")
+  , dpdEntities = require("./dpd.entities");
 function EntityStore() {
   if (!(this instanceof EntityStore)) return new EntityStore();
   console.log("entities/entity_store");
@@ -8,7 +9,7 @@ function EntityStore() {
     console.log("entities/entity_store|main");
     Store.call(self, {
       loadStore: function() {
-        dpd.entities.get(loadStoreGetEntities);
+        dpdEntities().get(loadStoreGetEntities);
       }
     });
   }

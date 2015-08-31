@@ -2,6 +2,7 @@
 data
 junk.*
 node_modules
+npm-debug.log
 public/dist/dpd.js
 public/dist/index.js
 public/dist/*.map

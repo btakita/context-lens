@@ -1,27 +1,34 @@
 var support = require(".")
   , test = support.test
   , _ = require("lodash");
-test('entity-list|render|GET /entities|200|render entity names|Get /perspectives|200|render perspective counts',
+test('entity-list|render|GET /entities|200|render entity names',
   {html: '<entity-list></entity-list>'},
   function(t) {
     t.mount();
     t.equals($("entity-list").length, 1, "entity-list");
-    t.equals(t.requests.length, 2);
 
-    getEntitiesReq(t);
-    t.deepEquals(_.map($("entity-list li .entity-name"), function(span) {
-      return span.textContent;
-    }), ["Joe Smith", "Lupita Juarez"]);
+    t.equals(t.requests.length, 0);
 
-    getPerspectivesReq(t);
-    t.deepEquals(_.map($("entity-list li .perspective-length"), function(span) {
-      return span.textContent;
-    }), ["1 perspective", "1 perspective"]);
+    var $entityListSearch = $(".entity-list-search");
+    $entityListSearch.val("Smi");
+    var keyupEvent = document.createEvent("KeyboardEvent");
+    keyupEvent.initKeyboardEvent('keyup', true, true, null, false,
+      false, false, false, 76, 0);
+    $entityListSearch[0].dispatchEvent(keyupEvent);
+    t.clock.tick(150);
+    t.equals(t.requests.length, 1);
+
+    getEntitiesReqSmi(t);
+    t.deepEquals(_.map($(".autocomplete-suggestions div"), function(div) {
+      return div.textContent;
+    }), ["Joe Smith", "Smirnoff Chekov"]);
 
     t.end();
   });
-function getEntitiesReq(t) {
-  var req = t.request("GET", "/entities");
+function getEntitiesReqSmi(t) {
+  var req = t.request("GET", "/entities", function(req, uri) {
+    return t.deepEquals2(uri.queryHash, {"name":{"$text":"Smi"}});
+  });
   t.equals(!!(req), true);
   t.respond(req,
     200,
@@ -32,25 +39,8 @@ function getEntitiesReq(t) {
       path: "/entities/joe-smith"
     }, {
       id: "d8301999ed6598c2",
-      name: "Lupita Juarez",
-      path: "/entities/lupita-juarez"
-    }])
-  );
-}
-function getPerspectivesReq(t) {
-  var req = t.request("GET", "/perspectives");
-  t.equals(!!(req), true);
-  t.respond(req,
-    200,
-    {"Content-Type": "application/json"},
-    JSON.stringify([{
-      id: "d8301999ed6599c1",
-      entityIds: ["d8301999ed6598c1"],
-      path: "/perspectives/joe-smith"
-    }, {
-      id: "d8301999ed6599c2",
-      entityIds: ["d8301999ed6598c2"],
-      path: "/perspectives/lupita-juarez"
+      name: "Smirnoff Chekov",
+      path: "/entities/smirnoff-chekov"
     }])
   );
 }
