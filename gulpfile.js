@@ -53,22 +53,6 @@ watchify2.on('update', function() {
 }); // on any dep update, runs the bundler
 watchify2.on('log', gutil.log); // output build logs to terminal
 
-gulp.task('dpd', dpd);
-gulp.task('dpd-watch', function() {
-  dpd();
-  watch("resources/**/*.json", dpd);
-});
-
-function dpd() {
-  console.log("Building public/dist/dpd.js");
-  request("http://localhost:2403/dpd.js", function(err, response, body) {
-    if (err) throw err;
-    fs.writeFile("public/dist/dpd.js", body, function(err2) {
-      if (err2) throw err2;
-    });
-  })
-}
-
 function browserifyChain(b) {
   return browserifyChain2(b
     .transform(babelify)

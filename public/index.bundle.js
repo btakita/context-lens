@@ -1,7 +1,5 @@
 console.log("public/index.bundle");
 require("./function/polyfills");
-require("./vendor/shoestring");
-window.$ = window.shoestring;
 var riot;
 global.riot = riot = require("riot");
 require("riotcontrol");

@@ -4,9 +4,11 @@ var sinon = require("sinon")
   , riot = require("riot")
   , bundle = require("../public/index.bundle")
   , ayepromise = window.ayepromise = require("ayepromise")// TODO: Remove when https://github.com/deployd/deployd/issues/644 is resolved
-  , dpd = require("../public/dist/dpd")
   , URI = require("uri-js")
-  , deepEquals = require("deep-equal");
+  , deepEquals = require("deep-equal")
+  , $ = require("../public/selectors/$")
+  , $$ = require("../public/selectors/$$")
+  ;
 document.querySelector('body').innerHTML += '<riot-wrapper></riot-wrapper>';
 var support = {
   setup: setup,
@@ -39,14 +41,14 @@ function setup(t, params) {
     setupDOM();
     setupExceptionHandling();
     logTestName();
+    setupSelectors();
     setupSinon();
-    setupDpd();
     setupApp();
     disableConsoleLog();
   }
   function setupDOM() {
     var html = params.html || "";
-    $("riot-wrapper").html(html);
+    $("riot-wrapper").innerHTML = html;
   }
   function setupExceptionHandling() {
     process.on('uncaughtException', function(err) {
@@ -62,6 +64,10 @@ function setup(t, params) {
   function logTestName() {
 
   }
+  function setupSelectors() {
+    self.$ = $;
+    self.$$ = $$;
+  }
   function setupSinon() {
     clock = self.clock = sinon.useFakeTimers();
     xhr = self.xhr = sinon.useFakeXMLHttpRequest();
@@ -72,8 +78,10 @@ function setup(t, params) {
     self.request = function(method, url, fn) {
       var fn2 = fn || function() {return true};
       return _.find(requests, function(req) {
-        var uri = URI.parse(req.url);
-        uri.queryHash = JSON.parse(decodeURIComponent(uri.query));
+        var uri = URI.parse(req.url)
+          , query = uri.query;
+        console.info("query", query, !!query);
+        uri.queryHash = query ? JSON.parse(decodeURIComponent(query)) : null;
         return req.method == method.toUpperCase() && (req.url == url || uri.path == url) && fn2(req, uri);
       });
     };
@@ -81,9 +89,6 @@ function setup(t, params) {
       request.respond(status, headers, body);
       self.clock.tick(2);
     };
-  }
-  function setupDpd() {
-    self.dpd = window.dpd;
   }
   function setupHelpers() {
     self._ = _;

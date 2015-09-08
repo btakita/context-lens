@@ -6,11 +6,7 @@ function PerspectiveStore() {
   var self = this;
   function main() {
     console.log("perspectives/perspective_store|main");
-    Store.call(self, {
-      loadStore: function() {
-        dpd.perspectives.get(loadStoreGetEntities);
-      }
-    });
+    Store.call(self);
   }
   function loadStoreGetEntities(perspectives, err) {
     console.log("perspectives/perspective_store/loadStoreGetEntities", JSON.stringify(perspectives));

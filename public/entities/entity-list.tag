@@ -18,8 +18,8 @@
       , plural = require('plural')
       , riotControl = require('riotcontrol')
       , EntityStore = require("./entity_store")
-      , dpdEntities = require("./dpd.entities.js")
       , PerspectiveStore = require("../perspectives/perspective_store")
+      , postEntitiesList = require("./post.entities.list")
       , extend = require("../object/extend")
       , entities2 = []
       , self = this
@@ -78,9 +78,7 @@
         selector: input,
         minChars: 2,
         source: function(term, suggest) {
-          dpdEntities().get({
-            name: {$text: term}
-          }, function(entities3) {
+          postEntitiesList(term, function(entities3) {
             entities2 = entities3;
             suggest(entities2.map(function(entity) {
               return entity.name;
